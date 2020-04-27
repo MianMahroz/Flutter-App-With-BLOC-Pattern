@@ -20,10 +20,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is LoginButtonPressed) {
       yield LoginLoading();
       try {
-        final token =  userRepository.authenticateUser(
-            authenticateUserRequestDto: event.authenticateUserRequestDto);
-//        authenticationBloc.add(LoggedIn(token: token));
+        final authenticateUserResponseDto =
+            await userRepository.authenticateUser(
+                authenticateUserRequestDto: event.authenticateUserRequestDto);
         yield LoginInitiated();
+        authenticationBloc.add(
+            LoggedIn(authenticateUserResponseDto: authenticateUserResponseDto));
       } catch (error) {
         yield LoginFailure(error: error);
       }

@@ -17,13 +17,12 @@ class UserRepository {
             body: jsonEncode(authenticateUserRequestDto.toJson()));
     try {
       AuthenticateUserResponseDto apiResponse =
-      AuthenticateUserResponseDto.fromJson(json.decode(response.body));
+          AuthenticateUserResponseDto.fromJson(json.decode(response.body));
       return apiResponse;
-    }catch(error){
-       return error;
+    } catch (error) {
+      log(error);
     }
-
-
+    return null;
   }
 
   Future<String> authenticated(

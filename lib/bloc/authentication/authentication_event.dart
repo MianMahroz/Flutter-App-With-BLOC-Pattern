@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutterapp01/models/AuthenticateUserResponseDto.dart';
 import 'package:flutterapp01/repositories/UserRepository.dart';
 
 abstract class AuthenticationEvent extends Equatable {
   const AuthenticationEvent();
+
   @override
   List<Object> get props => [];
 }
@@ -10,13 +12,14 @@ abstract class AuthenticationEvent extends Equatable {
 class AppStared extends AuthenticationEvent {}
 
 class LoggedIn extends AuthenticationEvent {
-  final String token;
+  final AuthenticateUserResponseDto authenticateUserResponseDto;
 
-  LoggedIn({this.token});
+  LoggedIn({this.authenticateUserResponseDto});
 
   @override
   List<Object> get props {
-    return [token];
+    return [authenticateUserResponseDto];
   }
 }
+
 class LoggedOut extends AuthenticationEvent {}

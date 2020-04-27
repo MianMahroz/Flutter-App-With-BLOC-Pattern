@@ -18,16 +18,15 @@ class AuthenticationBloc
   Stream<AuthenticationState> mapEventToState(
       AuthenticationEvent event) async* {
     if (event is AppStared) {
-      bool hasToken = await userRepository.hasToken();
-      if (hasToken)
-        yield AuthenticationAuthenticated();
-      else
+//      bool hasToken = await userRepository.hasToken();
+//      if (hasToken)
+//        yield AuthenticationAuthenticated();
+//      else
         yield AuthenticationUnAuthenticated();
     }
     if (event is LoggedIn) {
-      yield AuthenticationLoading();
-      await userRepository.persistToken(event.token);
-      yield  AuthenticationAuthenticated();
+      yield AuthenticationAuthenticated(
+          authenticateUserResponseDto: event.authenticateUserResponseDto);
     }
     if (event is LoggedOut) {
       yield AuthenticationLoading();

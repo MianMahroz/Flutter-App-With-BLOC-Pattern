@@ -21,14 +21,16 @@ class _LoginFormState extends State<LoginForm> {
       AuthenticateUserRequestDto();
 
   @override
-  Widget build(BuildContext context) {
-    _onLoginButtonPressed() {
-      _authenticateUserRequestDto.requestFrom = "pos_web";
-      BlocProvider.of<LoginBloc>(context).add(LoginButtonPressed(
-        authenticateUserRequestDto: _authenticateUserRequestDto,
-      ));
-    }
+  void initState() {
+    _usernameController.text = 'D75502';
+    _passwordController.text = 'a1!';
+    _authenticateUserRequestDto.userId = 'D75502';
+    _authenticateUserRequestDto.userPassword = 'a1!';
+    _authenticateUserRequestDto.requestFrom = 'pos_web';
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is LoginFailure) {
@@ -43,38 +45,50 @@ class _LoginFormState extends State<LoginForm> {
           return Form(
             child: Column(
               children: <Widget>[
-                TextFormField(
-                    decoration: InputDecoration(labelText: 'username'),
-                    controller: _usernameController,
-                    onChanged: (input) {
-                      log(input);
-                      _authenticateUserRequestDto.userId =
-                          _usernameController.text;
-                    }),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'password'),
-                  controller: _passwordController,
-                  obscureText: true,
-                  onChanged: (input) {
-                    _authenticateUserRequestDto.userPassword =
-                        _passwordController.text;
-                  },
-                ),
-                RaisedButton(
-                  onPressed:
-                      state is! LoginLoading ? _onLoginButtonPressed : null,
-                  child: Text('Login'),
-                ),
+                _formWidget(state),
                 Container(
                   child: state is LoginLoading
                       ? CircularProgressIndicator()
                       : null,
-                )
+                ),
               ],
             ),
           );
         },
       ),
     );
+  }
+
+  _onLoginButtonPressed() {
+    _authenticateUserRequestDto.requestFrom = "pos_web";
+    BlocProvider.of<LoginBloc>(context).add(LoginButtonPressed(
+      authenticateUserRequestDto: _authenticateUserRequestDto,
+    ));
+  }
+
+  Widget _formWidget(LoginState state) {
+    return Form(
+        child: Column(
+      children: <Widget>[
+        TextFormField(
+            decoration: InputDecoration(labelText: 'username'),
+            controller: _usernameController,
+            onChanged: (input) {
+              _authenticateUserRequestDto.userId = _usernameController.text;
+            }),
+        TextFormField(
+          decoration: InputDecoration(labelText: 'password'),
+          controller: _passwordController,
+          obscureText: true,
+          onChanged: (input) {
+            _authenticateUserRequestDto.userPassword = _passwordController.text;
+          },
+        ),
+        RaisedButton(
+          onPressed: state is! LoginLoading ? _onLoginButtonPressed : null,
+          child: Text('Login'),
+        )
+      ],
+    ));
   }
 }
