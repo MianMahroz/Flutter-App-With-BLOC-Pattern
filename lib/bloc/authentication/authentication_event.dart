@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutterapp01/models/AuthenticateUserResponseDto.dart';
-import 'package:flutterapp01/repositories/UserRepository.dart';
 
 abstract class AuthenticationEvent extends Equatable {
   const AuthenticationEvent();
