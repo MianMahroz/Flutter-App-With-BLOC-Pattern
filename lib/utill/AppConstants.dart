@@ -1,3 +1,3 @@
 class AppConstants{
- static String BASE_URL='http://192.168.230.49:8082/';
+ static String BASE_URL='http://192.168.1.2:8082/';
 }
