@@ -36,15 +36,14 @@ class CompareModelListBloc
       //updating compare model list
       if (state is CompareModelListUpdated) {
         List<FilterResponseDto> compareModelList = state.props;
-        if (null != compareModelList && compareModelList.isEmpty) {
+        if (null != compareModelList && !compareModelList.isEmpty) {
           compareModelList.add(inputModelObject);
           yield CompareModelListInitiated();
           yield CompareModelListUpdated(compareModelList: compareModelList);
-        } else {
-          yield CompareModelListUpdated(compareModelList: [inputModelObject]);
         }
+      } else {
+        yield CompareModelListUpdated(compareModelList: [inputModelObject]);
       }
-//      CompareModelListUpdated(compareModelList: )
     }
   }
 }

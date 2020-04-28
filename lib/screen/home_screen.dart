@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterapp01/bloc/authentication/authentication.dart';
+import 'package:flutterapp01/bloc/compareList/compareModelList_bloc.dart';
+import 'package:flutterapp01/bloc/compareList/compareModelList_state.dart';
 import 'package:flutterapp01/bloc/modelList_bloc/modelList_bloc.dart';
 import 'package:flutterapp01/bloc/modelList_bloc/modelList_event.dart';
 import 'package:flutterapp01/bloc/modelList_bloc/modelList_state.dart';
@@ -481,10 +483,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         Radius.circular(32.0),
                       ),
                       onTap: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.favorite_border),
-                      ),
+                      child: BlocBuilder<CompareModelListBloc,
+                          CompareModelListState>(builder: (context, state) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: <Widget>[
+                              state is CompareModelListUpdated
+                                  ? Text('${state.compareModelList.length}')
+                                  : Text('0'),
+                              Icon(Icons.shopping_cart)
+                            ],
+                          ),
+                        );
+                      }),
                     ),
                   ),
                   Material(
