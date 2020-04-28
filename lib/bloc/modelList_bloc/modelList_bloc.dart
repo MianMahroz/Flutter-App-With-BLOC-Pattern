@@ -18,9 +18,14 @@ class ModelListBloc extends Bloc<ModelListEvent, ModelListState> {
   Stream<ModelListState> mapEventToState(ModelListEvent event) async* {
     if (event is FetchModelList) {
       yield ModelListLoading();
-      List<FilterResponseDto> filterResponseDto = await filterModelListRepository
-          .fetchModelList(event.filterRequestDto);
+      List<FilterResponseDto> filterResponseDto =
+          await filterModelListRepository
+              .fetchModelList(event.filterRequestDto);
       yield ModelListLoaded(modelList: filterResponseDto);
+    }
+    if (event is UpdateModelList) {
+      yield ModelListLoading();
+      yield ModelListLoaded(modelList: event.modelList);
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterapp01/app_theme.dart';
 import 'package:flutterapp01/bloc/authentication/authentication.dart';
+import 'package:flutterapp01/bloc/compareList/compareModelList_bloc.dart';
 import 'package:flutterapp01/bloc/employeeType/employeeType_bloc.dart';
 import 'package:flutterapp01/bloc/login/login_bloc.dart';
 import 'package:flutterapp01/bloc/modelList_bloc/modelList_bloc.dart';
@@ -83,7 +84,12 @@ class MyApp extends StatelessWidget {
           if (state is AuthenticationAuthenticated) {
 //            return HomeScreen();
 //            return BottomNavigation();
-            return NavigationHomeScreen();
+//            return NavigationHomeScreen();
+            return BlocProvider(
+              create: (context) => CompareModelListBloc(
+                  modelListBloc: BlocProvider.of<ModelListBloc>(context)),
+              child: NavigationHomeScreen(),
+            );
           }
           if (state is AuthenticationUnAuthenticated) {
             return LoginScreen(userRepository: userRepository);

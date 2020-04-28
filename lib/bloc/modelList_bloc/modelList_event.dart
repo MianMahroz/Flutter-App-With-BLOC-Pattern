@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutterapp01/models/FilterRequestDto.dart';
+import 'package:flutterapp01/models/FilterResponseDto.dart';
 
 abstract class ModelListEvent extends Equatable {
   @override
@@ -19,6 +20,13 @@ class FetchModelList extends ModelListEvent {
   }
 }
 
-class AddToCart extends ModelListEvent {
+class UpdateModelList extends ModelListEvent {
+ final List<FilterResponseDto> modelList;
 
+  UpdateModelList({this.modelList});
+
+  @override
+  List<Object> get props {
+    return modelList;
+  }
 }

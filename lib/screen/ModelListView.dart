@@ -1,5 +1,10 @@
 import 'dart:developer';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterapp01/bloc/compareList/compareModelList_bloc.dart';
+import 'package:flutterapp01/bloc/compareList/compareModelList_event.dart';
+import 'package:flutterapp01/bloc/modelList_bloc/modelList_bloc.dart';
+import 'package:flutterapp01/bloc/modelList_bloc/modelList_event.dart';
 import 'package:flutterapp01/design_course/design_course_app_theme.dart';
 import 'package:flutterapp01/hotel_booking/hotel_app_theme.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +44,8 @@ class ModelListView extends StatelessWidget {
                 onTap: () {
 //                  callback();
                   log("On tab Clicked");
-                  modelObject.selected = true;
+                  BlocProvider.of<CompareModelListBloc>(context).add(
+                      AddToCompareModelList(filterResponseDto: modelObject));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -174,6 +180,27 @@ class ModelListView extends StatelessWidget {
                             ),
                           ],
                         ),
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(32.0),
+                              ),
+                              onTap: () {},
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: modelObject.selected?Icon(
+                                  Icons.favorite_border,
+                                  color: HotelAppTheme.buildLightTheme()
+                                      .primaryColor,
+                                ):Text('Not selected'),
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
