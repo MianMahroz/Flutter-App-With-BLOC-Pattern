@@ -52,9 +52,11 @@ class ModelListView extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.6),
+                        color: modelObject.selected
+                            ? Colors.grey.withOpacity(0.6)
+                            : Colors.grey.withOpacity(0.6),
                         offset: const Offset(4, 4),
-                        blurRadius: 16,
+                        blurRadius: modelObject.selected?2:16,
                       ),
                     ],
                   ),
@@ -192,11 +194,13 @@ class ModelListView extends StatelessWidget {
                               onTap: () {},
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: modelObject.selected?Icon(
-                                  Icons.favorite_border,
-                                  color: HotelAppTheme.buildLightTheme()
-                                      .primaryColor,
-                                ):Text('Not selected'),
+                                child: modelObject.selected
+                                    ? Icon(
+                                        Icons.done_outline,
+                                        color: HotelAppTheme.buildLightTheme()
+                                            .selectedRowColor,
+                                      )
+                                    : Text(''),
                               ),
                             ),
                           ),
