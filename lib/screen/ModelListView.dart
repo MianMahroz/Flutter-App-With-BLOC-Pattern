@@ -196,7 +196,7 @@ class ModelListView extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: modelObject.selected
                                     ? Icon(
-                                        Icons.done_outline,
+                                        Icons.check_circle,
                                         color: HotelAppTheme.buildLightTheme()
                                             .selectedRowColor,
                                       )
